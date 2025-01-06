@@ -27,7 +27,14 @@ class DatasetComparator implements DatasetComparatorInterface
 
     public const array TOTAL_THRESHOLDS = [
         'dbreads' => 2,
-        'dbwrites' => 2,
+        // The dbwrites total threshold is higher than the scenario (average) threshold
+        // because Moodle's session handler introduces non-deterministic writes.
+        // The session record is updated only when session data changes (e.g. lastaccess
+        // crossing a threshold), which depends on request timing. Across N loops this
+        // can produce up to ±N noise in totals. With 5 loops, a threshold of 6 filters
+        // out single-write session noise while still catching regressions that add 2+
+        // writes per request (which would produce a diff of 10+).
+        'dbwrites' => 6,
         'dbquerytime' => 2,
         'memoryused' => 2,
         'filesincluded' => 1,
@@ -108,7 +115,10 @@ class DatasetComparator implements DatasetComparatorInterface
                 ),
             );
         } else {
-            $comparison = $total1 <=> $total2;
+            // Determine the direction of change: after <=> before.
+            // For LOWER_IS_BETTER (-1): improvement means the after value decreased.
+            // For HIGHER_IS_BETTER (1): improvement means the after value increased.
+            $comparison = $total2 <=> $total1;
 
             if ($comparison === $direction) {
                 $resultSet->addResult(
@@ -196,7 +206,10 @@ class DatasetComparator implements DatasetComparatorInterface
                 ),
             );
         } else {
-            $comparison = $average1 <=> $average2;
+            // Determine the direction of change: after <=> before.
+            // For LOWER_IS_BETTER (-1): improvement means the after value decreased.
+            // For HIGHER_IS_BETTER (1): improvement means the after value increased.
+            $comparison = $average2 <=> $average1;
 
             if ($comparison === $direction) {
                 $resultSet->addResult(
@@ -274,11 +287,20 @@ class DatasetComparator implements DatasetComparatorInterface
     public static function getIgnoredKeys(): array
     {
         return [
-            'dbquerytime',
-            'timeused',
-            'time',
-            'latency',
-            'bytes',
+            'dbquerytime' => true,
+            'timeused' => true,
+            'time' => true,
+            'latency' => true,
+            'bytes' => true,
+            // Server load average is an infrastructure metric (Linux load average).
+            // It depends entirely on what other jobs are running on the CI worker,
+            // not on the Moodle code being tested.
+            'serverload' => true,
+            // Files included is a legacy metric from when Moodle had monolithic *lib.php
+            // files. Modern Moodle breaks code into smaller files so more files may be
+            // included but with less content each. The metric correlates with memory and
+            // time which are already tracked separately.
+            'filesincluded' => true,
         ];
     }
 
