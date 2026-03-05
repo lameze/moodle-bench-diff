@@ -97,12 +97,13 @@ class CompareResultsCommand extends Command
                         ),
                         new TableCell($result->description, $failedStyling),
                     ]);
+                } else {
+                    $table->addRow([
+                        $result->scenario->name,
+                        "{$result->key} ({$result->comparisonType})",
+                        $result->description,
+                    ]);
                 }
-                $table->addRow([
-                    $result->scenario->name,
-                    "{$result->key} ({$result->comparisonType})",
-                    $result->description,
-                ]);
             }
             $table->render();
         }
