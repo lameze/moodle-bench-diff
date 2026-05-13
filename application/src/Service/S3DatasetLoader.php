@@ -12,7 +12,7 @@ class S3DatasetLoader implements
     DatasetLoaderInterface
 {
     public function __construct(
-        private \Aws\S3\S3Client $s3Client,
+        private ?\Aws\S3\S3Client $s3Client,
         private ContainerBagInterface $params,
     ) {
     }
@@ -42,6 +42,10 @@ class S3DatasetLoader implements
     public function datasetExists(
         string $name,
     ): bool {
+        if ($this->s3Client === null) {
+            return false;
+        }
+
         $path = $this->getDatasetPath($name);
 
         try {
@@ -60,6 +64,10 @@ class S3DatasetLoader implements
         string $name,
         bool $pathIsResolved = false,
     ): Dataset {
+        if ($this->s3Client === null) {
+            throw new \RuntimeException('S3 client is not configured. Configure AWS credentials to use S3 datasets.');
+        }
+
         if ($pathIsResolved) {
             $path = $name;
         } else {

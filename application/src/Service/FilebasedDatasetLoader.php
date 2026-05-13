@@ -19,9 +19,22 @@ class FilebasedDatasetLoader implements DatasetLoaderInterface
         }
     }
 
+    /**
+     * Check if the given path is an absolute file path
+     */
+    private function isAbsolutePath(string $path): bool
+    {
+        return str_starts_with($path, '/') || str_starts_with($path, './');
+    }
+
     private function getDatasetPath(
         string $name,
     ): string {
+        // If it's an absolute path, use it directly
+        if ($this->isAbsolutePath($name)) {
+            return $name;
+        }
+
         $this->validateDatasetName($name);
         $filename = sprintf('%s.json', $name);
 
@@ -50,6 +63,11 @@ class FilebasedDatasetLoader implements DatasetLoaderInterface
         }
 
         $data = json_decode(file_get_contents($path));
+
+        // Add runTime if it doesn't exist (use file modification time or current time)
+        if (!isset($data->runTime)) {
+            $data->runTime = \DateTimeImmutable::createFromFormat('U', (string)filemtime($path));
+        }
 
         return Dataset::loadFullDataset($name, $data);
     }

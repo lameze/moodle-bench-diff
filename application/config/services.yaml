@@ -6,16 +6,7 @@
 parameters:
     app.datasets_path: 'runs'
     app.s3_dataset_path: 'performance/storage'
-    app.s3_bucket: '%env(AWS_S3_BUCKET)%'
-
-aws:
-    version: latest
-    region: '%env(AWS_REGION)%'
-    credentials:
-        key: '%env(AWS_ACCESS_KEY)%'
-        secret: '%env(AWS_ACCESS_SECRET_KEY)%'
-    S3:
-        version: '2006-03-01'
+    app.s3_bucket: '%env(default::AWS_S3_BUCKET)%'
 
 services:
     # default configuration for services in *this* file
@@ -34,4 +25,19 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Service\DatasetLoaderInterface: '@App\Service\S3DatasetLoader'
+    App\Service\DatasetLoaderInterface: '@App\Service\HybridDatasetLoader'
+    
+    App\Service\S3DatasetLoader:
+        arguments:
+            $s3Client: null
+
+when@aws_configured:
+    aws:
+        version: latest
+        region: '%env(AWS_REGION)%'
+        credentials:
+            key: '%env(AWS_ACCESS_KEY)%'
+            secret: '%env(AWS_ACCESS_SECRET_KEY)%'
+        S3:
+            version: '2006-03-01'
+

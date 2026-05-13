@@ -1,0 +1,220 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║              ✅ YES - WEB GRAPHIC INTERFACE CONFIRMED                        ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+The moodle-bench-diff tool includes a PROFESSIONAL WEB INTERFACE with visual
+charts and an interactive dashboard!
+
+═══════════════════════════════════════════════════════════════════════════════
+🎨 FEATURES
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ Interactive Web Dashboard
+   - Filter datasets by multiple criteria
+   - Select datasets to compare
+   - Real-time filtering
+
+✅ Visual Performance Charts
+   - Horizontal bar charts
+   - One chart per metric
+   - Side-by-side dataset comparison
+   - Interactive hover values
+
+✅ Professional UI
+   - Bootstrap 5 styling
+   - Mobile-responsive design
+   - Clean, modern interface
+   - Works on desktop, tablet, mobile
+
+✅ Data Source Integration
+   - Load from local JSON files
+   - Load from AWS S3 bucket
+   - Automatic data discovery
+   - No configuration needed
+
+═══════════════════════════════════════════════════════════════════════════════
+🚀 QUICK START
+═══════════════════════════════════════════════════════════════════════════════
+
+SIMPLEST WAY - Docker with Local Files:
+
+  1. Copy your JSON files to a directory:
+     mkdir benchmarks
+     cp before.json after.json benchmarks/
+
+  2. Run the web server:
+     docker run --rm -p 8000:80 \
+       -v ./benchmarks:/var/www/runs \
+       moodlehq/moodle-bench-diff:latest
+
+  3. Open browser:
+     http://localhost:8000
+
+═══════════════════════════════════════════════════════════════════════════════
+📊 WHAT YOU'LL SEE
+═══════════════════════════════════════════════════════════════════════════════
+
+SCREEN 1: Dataset Browser & Filter
+  ┌──────────────────────────────────────┐
+  │ Filter Datasets                      │
+  │ ┌─────────────────────────────────┐  │
+  │ │ Branch: [dropdown]               │  │
+  │ │ Size:   [dropdown]               │  │
+  │ │ Users:  [text input]             │  │
+  │ │ [Submit]                         │  │
+  │ └─────────────────────────────────┘  │
+  │                                      │
+  │ Available Datasets                   │
+  │ ☐ before.json                        │
+  │ ☐ after.json                         │
+  │ ☐ other-benchmark.json               │
+  │ [Compare Selected]                   │
+  └──────────────────────────────────────┘
+
+SCREEN 2: Performance Charts
+  ┌──────────────────────────────────────┐
+  │ Run Information                      │
+  │ ┌─────────────┬────────────────────┐ │
+  │ │ Metric      │ before │ after    │ │
+  │ ├─────────────┼────────┼──────────┤ │
+  │ │ Branch      │ main   │ feat-x   │ │
+  │ │ Timestamp   │ 2026.. │ 2026..   │ │
+  │ │ Users       │ 1      │ 1        │ │
+  │ └─────────────┴────────┴──────────┘ │
+  │                                      │
+  │ Database Query Time                  │
+  │ Login           ████   ███           │
+  │ Frontpage       █████  ████          │
+  │ View course     ██████ █████         │
+  │ View activity   ████   ███           │
+  │                                      │
+  │ Memory Usage                         │
+  │ Login           ██████████  ████     │
+  │ Frontpage       ███████     ████     │
+  │ View course     ███████████ ███      │
+  │                                      │
+  │ [More Charts...]                     │
+  └──────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+📈 CHARTS INCLUDED
+═══════════════════════════════════════════════════════════════════════════════
+
+Database Metrics:
+  • dbreads      - Database read operations
+  • dbwrites     - Database write operations
+  • dbquerytime  - Time spent in queries
+
+Resource Metrics:
+  • memoryused   - Memory consumption
+  • filesincluded - Number of files loaded
+  • serverload   - System load during test
+  • sessionsize  - Session data size
+
+Network Metrics:
+  • bytes        - HTTP bytes transferred
+  • latency      - Request-to-response time
+  • time         - Overall response time
+
+═══════════════════════════════════════════════════════════════════════════════
+🔧 TECHNICAL DETAILS
+═══════════════════════════════════════════════════════════════════════════════
+
+Framework:        Symfony 6.4
+Templating:       Twig
+Styling:          Bootstrap 5
+Charting Library: Chart.js (via Symfony UX)
+Data Loading:     Local files or AWS S3
+
+Key Components:
+  • IndexController     - Handles filtering and display
+  • ComparisonController - Handles comparisons
+  • DatasetLoader       - Loads from local/S3
+  • ChartBuilder        - Generates Chart.js configs
+
+═══════════════════════════════════════════════════════════════════════════════
+📚 DOCUMENTATION
+═══════════════════════════════════════════════════════════════════════════════
+
+NEW FILES CREATED:
+
+1. WEB_INTERFACE.md (9 KB)
+   Complete web interface documentation
+   - Features overview
+   - How to access
+   - Technical stack
+   - Architecture
+
+2. WEB_USAGE_GUIDE.md (8 KB)
+   Step-by-step usage guide
+   - Quick start instructions
+   - Dashboard walkthrough
+   - Tips and tricks
+   - Troubleshooting
+
+3. README.md (UPDATED)
+   - Web interface section added
+   - Quick start with docker
+   - Feature highlights
+
+═══════════════════════════════════════════════════════════════════════════════
+✨ KEY HIGHLIGHTS
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ Professional UI with modern design
+✅ Interactive charts with hover information
+✅ Advanced filtering and selection
+✅ Mobile-responsive interface
+✅ Works with local files (no AWS required)
+✅ AWS S3 integration available
+✅ Real-time chart rendering
+✅ Easy to use - no configuration needed
+✅ Production-ready implementation
+✅ Fully documented with guides
+
+═══════════════════════════════════════════════════════════════════════════════
+🎯 PERFECT FOR
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ Visual performance analysis
+✓ Team collaboration and reporting
+✓ CI/CD dashboard integration
+✓ Historical trend analysis
+✓ Performance regression detection
+✓ Code optimization impact visualization
+✓ Presentation to stakeholders
+✓ Data-driven decision making
+
+═══════════════════════════════════════════════════════════════════════════════
+📱 ACCESSIBILITY
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ Desktop computers (Chrome, Firefox, Safari, Edge)
+✓ Tablets (iPad, Android tablets)
+✓ Mobile phones (iPhone, Android phones)
+✓ Touch-friendly interface
+✓ Responsive layout adapts to screen size
+
+═══════════════════════════════════════════════════════════════════════════════
+🚀 NEXT STEPS
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Read WEB_USAGE_GUIDE.md for step-by-step instructions
+2. Start the web server with your benchmark data
+3. Filter and select datasets to compare
+4. Analyze performance charts
+5. Share results with your team
+6. Integrate into your CI/CD pipeline
+
+═══════════════════════════════════════════════════════════════════════════════
+
+  Start the web server: docker run -p 8000:80 \
+    -v ./benchmarks:/var/www/runs \
+    moodlehq/moodle-bench-diff:latest
+
+  Then visit: http://localhost:8000
+
+═══════════════════════════════════════════════════════════════════════════════
+

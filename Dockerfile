@@ -43,5 +43,5 @@ COPY application /var/www
 RUN composer install -n \
     && rm -rf /root/.composer
 
-CMD ["symfony", "server:start", "--port=80", "--no-tls", "--allow-http"]
+CMD ["symfony", "server:start", "--port=80", "--no-tls", "--allow-http", "--allow-all-ip"]
 ENTRYPOINT ["/entrypoint.sh"]
