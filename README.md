@@ -383,9 +383,3 @@ Contributions are welcome. Please follow Symfony coding standards and include te
 ## License
 
 See LICENSE file for details.
-
-## Support
-
-For issues, questions, or contributions, please refer to the Moodle CI documentation or contact the Moodle HQ team.
-
-urr
