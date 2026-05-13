@@ -93,6 +93,10 @@ class S3DatasetLoader implements
         string $matching = '',
         ?SymfonyStyle $io = null,
     ): array {
+        if ($this->s3Client === null) {
+            return [];
+        }
+
         $continuationToken = null;
         $allResults = [];
 
